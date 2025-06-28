@@ -1,13 +1,13 @@
 package com.arshalif.cashi.features.transaction.domain.usecase
 
+import com.arshalif.cashi.core.network.NetworkResult
 import com.arshalif.cashi.features.transaction.domain.model.Transaction
 import com.arshalif.cashi.features.transaction.domain.repository.TransactionRepository
-import kotlinx.coroutines.flow.Flow
 
 class GetTransactionsUseCase(
     private val transactionRepository: TransactionRepository
 ) {
-    operator fun invoke(): Flow<List<Transaction>> {
+    suspend operator fun invoke(): NetworkResult<List<Transaction>> {
         return transactionRepository.getTransactions()
     }
 } 

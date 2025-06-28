@@ -15,7 +15,11 @@ class PaymentRepositoryImpl(
         return try {
             val request = payment.toRequestDto()
             val response = apiService.sendPayment(request)
-            NetworkResult.Success(response.toDomain())
+            if (response.success && response.payment != null) {
+                NetworkResult.Success(response.payment.toDomain())
+            } else {
+                NetworkResult.Error(response.error ?: response.message)
+            }
         } catch (e: Exception) {
             NetworkResult.Error(e.message ?: "Failed to send payment")
         }

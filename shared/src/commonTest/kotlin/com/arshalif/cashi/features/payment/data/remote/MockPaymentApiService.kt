@@ -3,56 +3,50 @@ package com.arshalif.cashi.features.payment.data.remote
 import com.arshalif.cashi.features.payment.data.model.PaymentDto
 import com.arshalif.cashi.features.payment.data.model.PaymentRequestDto
 import com.arshalif.cashi.features.transaction.data.model.TransactionDto
+import com.arshalif.cashi.core.remote.PaymentApiService
+import com.arshalif.cashi.core.remote.PaymentResponse
+import com.arshalif.cashi.core.remote.TransactionsResponse
 import kotlinx.datetime.Clock
 import kotlin.random.Random
 
 class MockPaymentApiService : PaymentApiService {
     
-    override suspend fun sendPayment(request: PaymentRequestDto): PaymentDto {
+    override suspend fun sendPayment(request: PaymentRequestDto): PaymentResponse {
         // Simulate network delay
         kotlinx.coroutines.delay(500)
         
-        return PaymentDto(
+        val payment = PaymentDto(
             id = generateTransactionId(),
             recipientEmail = request.recipientEmail,
             amount = request.amount,
             currency = request.currency,
             timestamp = Clock.System.now().toString()
         )
+        
+        return PaymentResponse(
+            success = true,
+            message = "Payment processed successfully",
+            payment = payment
+        )
     }
     
-    override suspend fun getTransactionHistory(): List<TransactionDto> {
+    override suspend fun getTransactionHistory(): TransactionsResponse {
         // Simulate network delay
         kotlinx.coroutines.delay(300)
         
-        return listOf(
+        val transactions = (1..5).map { index ->
             TransactionDto(
                 id = generateTransactionId(),
-                recipientEmail = "john@example.com",
-                amount = 100.0,
-                currency = "USD",
-                timestamp = Clock.System.now().toString(),
-                status = "COMPLETED",
-                transactionType = "PAYMENT"
-            ),
-            TransactionDto(
-                id = generateTransactionId(),
-                recipientEmail = "jane@example.com",
-                amount = 250.0,
-                currency = "EUR",
-                timestamp = Clock.System.now().toString(),
-                status = "COMPLETED",
-                transactionType = "PAYMENT"
-            ),
-            TransactionDto(
-                id = generateTransactionId(),
-                recipientEmail = "bob@example.com",
-                amount = 75.0,
-                currency = "GBP",
-                timestamp = Clock.System.now().toString(),
-                status = "PENDING",
-                transactionType = "PAYMENT"
+                recipientEmail = "user$index@example.com",
+                amount = Random.nextDouble(10.0, 1000.0),
+                currency = listOf("USD", "EUR", "GBP").random(),
+                timestamp = Clock.System.now().toString()
             )
+        }
+        
+        return TransactionsResponse(
+            success = true,
+            transactions = transactions
         )
     }
     

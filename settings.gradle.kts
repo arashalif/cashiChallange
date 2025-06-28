@@ -26,6 +26,12 @@ dependencyResolutionManagement {
         }
         mavenCentral()
     }
+    
+    versionCatalogs {
+        create("libs") {
+            version("core-proto", "0.0.9-alpha01")
+        }
+    }
 }
 
 include(":composeApp")

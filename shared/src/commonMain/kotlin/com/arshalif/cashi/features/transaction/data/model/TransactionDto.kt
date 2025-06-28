@@ -2,7 +2,6 @@ package com.arshalif.cashi.features.transaction.data.model
 
 import com.arshalif.cashi.features.payment.domain.model.Currency
 import com.arshalif.cashi.features.transaction.domain.model.Transaction
-import com.arshalif.cashi.features.transaction.domain.model.TransactionStatus
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
@@ -12,9 +11,7 @@ data class TransactionDto(
     val recipientEmail: String,
     val amount: Double,
     val currency: String,
-    val timestamp: String,
-    val status: String,
-    val transactionType: String
+    val timestamp: String
 )
 
 fun TransactionDto.toDomain(): Transaction {
@@ -23,8 +20,6 @@ fun TransactionDto.toDomain(): Transaction {
         recipientEmail = recipientEmail,
         amount = amount,
         currency = Currency.fromCode(currency) ?: Currency.USD,
-        timestamp = Instant.parse(timestamp),
-        status = TransactionStatus.valueOf(status.uppercase()),
-        transactionType = transactionType
+        timestamp = Instant.parse(timestamp)
     )
 } 

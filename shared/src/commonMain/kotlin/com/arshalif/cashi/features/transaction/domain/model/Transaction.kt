@@ -8,5 +8,5 @@ data class Transaction(
     val recipientEmail: String,
     val amount: Double,
     val currency: Currency,
-    val timestamp: Instant,
+    val timestamp: Instant
 )

@@ -30,15 +30,17 @@ kotlin {
     
     sourceSets {
         commonMain.dependencies {
-            // put your Multiplatform dependencies here
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+            // Kotlinx dependencies
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlinx.serialization.json)
             
             // Ktor Client dependencies
             implementation(libs.ktor.clientCore)
             implementation(libs.ktor.clientContentNegotiation)
             implementation(libs.ktor.clientLogging)
-            implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.7")
+            implementation(libs.ktor.serialization.kotlinx.json)
+            
+            // Koin
             implementation(libs.koin.core)
         }
         

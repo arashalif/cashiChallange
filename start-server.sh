@@ -1,38 +1,52 @@
 #!/bin/bash
 
-echo "🚀 Starting CashiChallenge Server..."
-echo "=================================="
+echo "🚀 Starting CashiChallenge Server with Firebase Integration"
+echo "=========================================================="
 
-# Check if Java is installed
-if ! command -v java &> /dev/null; then
-    echo "❌ Java is not installed. Please install Java 11 or higher."
-    exit 1
+# Check if service account key exists
+if [ ! -f "server/keys/serviceAccount.json" ]; then
+    echo "❌ Firebase service account key not found!"
+    echo "📋 Please download your service account key from Firebase Console:"
+    echo "   1. Go to https://console.firebase.google.com/"
+    echo "   2. Select your project"
+    echo "   3. Go to Project Settings → Service Accounts"
+    echo "   4. Click 'Generate new private key'"
+    echo "   5. Save as 'server/keys/serviceAccount.json'"
+    echo ""
+    echo "⚠️  Server will start with in-memory storage only"
+    echo ""
 fi
 
 # Check Java version
-java_version=$(java -version 2>&1 | head -n 1 | cut -d'"' -f2 | cut -d'.' -f1)
-if [ "$java_version" -lt 11 ]; then
-    echo "❌ Java version $java_version is too old. Please install Java 11 or higher."
-    exit 1
+echo "🔍 Checking Java version..."
+java -version
+
+echo ""
+echo "🏗️  Building server..."
+./gradlew clean
+./gradlew :server:build
+
+echo ""
+echo "🚀 Starting server on http://localhost:8080"
+
+# Check Firebase integration status
+if [ -f "server/keys/serviceAccount.json" ]; then
+    echo "📊 Firebase Firestore integration: ✅ Enabled"
+else
+    echo "📊 Firebase Firestore integration: ❌ Disabled (in-memory only)"
 fi
 
-echo "✅ Java version: $(java -version 2>&1 | head -n 1)"
-
-# Check if Gradle wrapper exists in root directory
-if [ ! -f "./gradlew" ]; then
-    echo "❌ Gradle wrapper not found. Please run from the project root directory."
-    exit 1
-fi
-
-# Make gradlew executable
-chmod +x ./gradlew
-
-echo "🔧 Building and starting server..."
-echo "📡 Server will be available at: http://localhost:8080"
-echo "📱 For Android emulator, use: http://10.0.2.2:8080"
 echo ""
-echo "Press Ctrl+C to stop the server"
+echo "📝 Available endpoints:"
+echo "   POST /payments     - Create payment"
+echo "   GET  /payments     - Get all payments"
+echo "   GET  /transactions - Get all transactions"
+echo "   GET  /statistics   - Get statistics"
+echo "   POST /clear        - Clear all data"
+echo "   GET  /health       - Health check"
+echo ""
+echo "🛑 Press Ctrl+C to stop the server"
 echo ""
 
-# Start the server using the root gradlew
+# Start the server
 ./gradlew :server:run 

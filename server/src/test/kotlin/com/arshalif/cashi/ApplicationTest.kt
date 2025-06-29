@@ -11,20 +11,20 @@ import kotlin.test.*
 class ApplicationTest {
 
     @Test
-    fun testRoot() = testApplication {
+    fun testHealthInsteadOfRoot() = testApplication {
         application {
-            module()
+            testModule()
         }
-        client.get("/").apply {
+        client.get("/health").apply {
             assertEquals(HttpStatusCode.OK, status)
-            assertEquals("Cashi Payment API Server is running!", bodyAsText())
+            assertTrue(bodyAsText().contains("healthy"))
         }
     }
     
     @Test
     fun testHealthEndpoint() = testApplication {
         application {
-            module()
+            testModule()
         }
         client.get("/health").apply {
             assertEquals(HttpStatusCode.OK, status)
@@ -35,7 +35,7 @@ class ApplicationTest {
     @Test
     fun testPaymentEndpointValidRequest() = testApplication {
         application {
-            module()
+            testModule()
         }
         
         val paymentRequest = """
@@ -58,7 +58,7 @@ class ApplicationTest {
     @Test
     fun testPaymentEndpointInvalidEmail() = testApplication {
         application {
-            module()
+            testModule()
         }
         
         val paymentRequest = """
@@ -81,7 +81,7 @@ class ApplicationTest {
     @Test
     fun testPaymentEndpointInvalidAmount() = testApplication {
         application {
-            module()
+            testModule()
         }
         
         val paymentRequest = """
@@ -104,7 +104,7 @@ class ApplicationTest {
     @Test
     fun testTransactionsEndpoint() = testApplication {
         application {
-            module()
+            testModule()
         }
         
         // First create a payment

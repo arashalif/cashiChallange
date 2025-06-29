@@ -23,7 +23,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.navigation.compose)
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+            implementation(libs.kotlinx.datetime)
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
             implementation(libs.ktor.clientCore)

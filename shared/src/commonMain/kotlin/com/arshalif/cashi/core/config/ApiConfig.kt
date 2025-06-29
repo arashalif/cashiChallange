@@ -1,8 +1,8 @@
 package com.arshalif.cashi.core.config
 
 object ApiConfig {
-    // For USB debugging with port forwarding (adb reverse tcp:8080 tcp:8080)
-    const val BASE_URL = "http://0.0.0.0:8080"
+    // For local development with USB debugging (adb reverse tcp:8080 tcp:8080)
+    const val BASE_URL = "http://localhost:8080"
     
     // Alternative configurations for different scenarios:
     // const val BASE_URL = "http://10.0.2.2:8080" // For Android emulator

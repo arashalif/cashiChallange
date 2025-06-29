@@ -207,7 +207,6 @@ class PaymentStepDefinitions {
     fun thereAreNoTransactionsInTheSystem() {
         // This would require clearing the mock data
         // For now, we'll simulate an empty response scenario
-        // We'll override the response in the test
     }
     
     @Then("I should receive a list of transactions")

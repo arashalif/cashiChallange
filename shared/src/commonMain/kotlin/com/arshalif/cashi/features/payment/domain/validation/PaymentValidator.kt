@@ -2,13 +2,13 @@ package com.arshalif.cashi.features.payment.domain.validation
 
 import com.arshalif.cashi.features.payment.domain.model.Payment
 
-class PaymentValidator(
+open class PaymentValidator(
     private val currencyValidator: CurrencyValidator = DefaultCurrencyValidator()
 ) {
-    fun isValidEmail(email: String): Boolean =
-        email.matches(Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
+    open fun isValidEmail(email: String): Boolean =
+        email.matches(Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"))
 
-    fun validatePayment(payment: Payment): ValidationResult {
+    open fun validatePayment(payment: Payment): ValidationResult {
         return when {
             !isValidEmail(payment.recipientEmail) -> 
                 ValidationResult.Invalid("Invalid email format")

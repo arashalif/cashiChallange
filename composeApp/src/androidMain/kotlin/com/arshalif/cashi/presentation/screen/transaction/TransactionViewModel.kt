@@ -2,7 +2,6 @@ package com.arshalif.cashi.presentation.screen.transaction
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arshalif.cashi.features.transaction.domain.model.Transaction
 import com.arshalif.cashi.features.transaction.domain.usecase.GetTransactionsUseCase
 import com.arshalif.cashi.features.transaction.presentation.event.TransactionEvent
 import com.arshalif.cashi.features.transaction.presentation.state.TransactionUiState

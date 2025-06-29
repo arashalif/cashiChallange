@@ -7,7 +7,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.arshalif.cashi.presentation.screen.payment.PaymentScreen
 import com.arshalif.cashi.presentation.screen.transaction.TransactionScreen
-import org.koin.androidx.compose.koinViewModel
 
 sealed class Screen(val route: String) {
     object Payment : Screen("payment")

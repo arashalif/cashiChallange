@@ -1,3 +1,14 @@
 # This file keeps the demo-video folder in git
 # Upload your demo video files here (MP4, MOV, etc.)
 # Then get the raw GitHub URL and update the main README 
+
+# Demo Video Directory
+# 
+# This directory is for demo video files
+# 
+# Note: Large video files (>50MB) should be:
+# 1. Hosted externally (YouTube, Vimeo, etc.)
+# 2. Or use Git LFS if needed in repository
+# 
+# Current demo video: demoCashi.mov (97MB) - too large for GitHub
+# Recommended: Upload to video hosting platform and link in README.md 

@@ -5,18 +5,15 @@ A comprehensive **Kotlin Multiplatform** payment application with real-time vali
 ## 🎥 Demo Video
 
 <!-- 📹 Paste your demo video link here -->
-**Demo Video URL:** `[PASTE_YOUR_VIDEO_LINK_HERE]`
+**Demo Video URL:** `https://github.com/arashalif/cashiChallange/blob/main/sharing/demo-video/demoCashi.mp4`
 
-> **Instructions:** Replace `[PASTE_YOUR_VIDEO_LINK_HERE]` with your actual demo video URL from the git repository's sharing folder.
 
 ---
 
 ## 📱 APK Download
 
 <!-- 📦 Paste your APK download link here -->
-**APK Download URL:** `[PASTE_YOUR_APK_LINK_HERE]`
-
-> **Instructions:** Replace `[PASTE_YOUR_APK_LINK_HERE]` with the direct download link to your APK file from the git repository's sharing folder.
+**APK Download URL:** `https://github.com/arashalif/cashiChallange/blob/main/sharing/apk-releases/cashiChallange.apk`
 
 ### 📋 Installation Instructions
 1. Download the APK file from the link above

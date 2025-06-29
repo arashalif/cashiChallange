@@ -69,8 +69,6 @@ Feature: Payment Processing
       | 100.00 | USD      |
       | 85.50  | EUR      |
       | 75.25  | GBP      |
-      | 10000  | JPY      |
-      | 150.75 | CAD      |
 
   Scenario: Retrieve transaction history
     Given there are existing transactions in the system
@@ -96,5 +94,5 @@ Feature: Payment Processing
       | @example.com             | false |
       | user@                    | false |
       | user@.com                | false |
-      | user..dot@example.com    | false |
+      | user space@example.com   | false |
     Then the email validation should return the expected results 

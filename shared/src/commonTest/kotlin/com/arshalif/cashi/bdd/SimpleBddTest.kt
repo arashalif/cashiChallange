@@ -88,7 +88,8 @@ class SimpleBddTest {
             "invalid-email" to false,
             "@example.com" to false,
             "user@" to false,
-            "user@.com" to false
+            "user@.com" to false,
+            "user space@example.com" to false  // Space in email should be invalid
         )
         
         val stepDefs = PaymentStepDefinitions()

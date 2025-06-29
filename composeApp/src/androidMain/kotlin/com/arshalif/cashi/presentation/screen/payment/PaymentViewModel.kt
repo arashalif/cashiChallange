@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import com.arshalif.cashi.features.payment.domain.validation.DefaultCurrencyValidator
+import com.arshalif.cashi.features.payment.domain.validation.ValidationResult
 
 class PaymentViewModel(
     private val sendPaymentUseCase: SendPaymentUseCase,
@@ -48,25 +50,60 @@ class PaymentViewModel(
     
     private fun updateEmail(email: String) {
         _formState.update { currentState ->
+            val isValid = paymentValidator.isValidEmail(email)
             currentState.copy(
                 recipientEmail = email,
-                isEmailValid = paymentValidator.isValidEmail(email)
+                isEmailValid = email.isBlank() || isValid,
+                emailErrorMessage = if (email.isNotBlank() && !isValid) "Please enter a valid email address" else null
             )
         }
     }
     
     private fun updateAmount(amount: String) {
         _formState.update { currentState ->
+            val isValidFormat = amount.isNotBlank() && amount.toDoubleOrNull() != null
+            val amountValue = amount.toDoubleOrNull() ?: 0.0
+            
+            val validationMessage = if (amount.isNotBlank() && isValidFormat) {
+                val currencyValidator = DefaultCurrencyValidator()
+                val validationResult = currencyValidator.validateAmount(amountValue, currentState.selectedCurrency)
+                if (validationResult is ValidationResult.Invalid) {
+                    validationResult.message
+                } else null
+            } else if (amount.isNotBlank() && !isValidFormat) {
+                "Please enter a valid number"
+            } else null
+            
+            val isValid = amount.isBlank() || (isValidFormat && validationMessage == null)
+            
             currentState.copy(
                 amount = amount,
-                isAmountValid = amount.isNotBlank() && amount.toDoubleOrNull() != null
+                isAmountValid = isValid,
+                amountErrorMessage = validationMessage
             )
         }
     }
     
     private fun updateCurrency(currency: Currency) {
         _formState.update { currentState ->
-            currentState.copy(selectedCurrency = currency)
+            val newState = currentState.copy(selectedCurrency = currency)
+            
+            // Re-validate amount with new currency
+            if (newState.amount.isNotBlank()) {
+                val amountValue = newState.amount.toDoubleOrNull()
+                if (amountValue != null) {
+                    val currencyValidator = DefaultCurrencyValidator()
+                    val validationResult = currencyValidator.validateAmount(amountValue, currency)
+                    newState.copy(
+                        isAmountValid = validationResult is ValidationResult.Valid,
+                        amountErrorMessage = if (validationResult is ValidationResult.Invalid) validationResult.message else null
+                    )
+                } else {
+                    newState
+                }
+            } else {
+                newState
+            }
         }
     }
     
@@ -124,6 +161,8 @@ class PaymentViewModel(
             selectedCurrency = Currency.USD,
             isEmailValid = true,
             isAmountValid = true,
+            emailErrorMessage = null,
+            amountErrorMessage = null,
             isLoading = false
         )
     }

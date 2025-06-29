@@ -51,7 +51,7 @@ class CurrencyValidatorTest {
     fun `EUR has different maximum amount than USD`() {
         val result = validator.validateAmount(9000.0, Currency.EUR)
         assertTrue(result is ValidationResult.Invalid)
-        assertTrue((result as ValidationResult.Invalid).message.contains("8500"))
+        assertTrue((result as ValidationResult.Invalid).message.contains("8,500"))
     }
 
     @Test
@@ -61,6 +61,6 @@ class CurrencyValidatorTest {
         
         val result2 = validator.validateAmount(9000.0, Currency.GBP)
         assertTrue(result2 is ValidationResult.Invalid)
-        assertTrue((result2 as ValidationResult.Invalid).message.contains("8000"))
+        assertTrue((result2 as ValidationResult.Invalid).message.contains("8,000"))
     }
 } 

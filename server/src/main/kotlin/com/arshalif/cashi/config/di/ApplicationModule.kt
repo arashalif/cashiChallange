@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 val applicationModule = module {
     // Application Services
-    single { PaymentApplicationService(get(), get()) }
+    single { PaymentApplicationService(get()) }
     single { TransactionApplicationService(get(), get()) }
 } 

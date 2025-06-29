@@ -8,6 +8,8 @@ data class PaymentFormState(
     val selectedCurrency: Currency = Currency.USD,
     val isEmailValid: Boolean = true,
     val isAmountValid: Boolean = true,
+    val emailErrorMessage: String? = null,
+    val amountErrorMessage: String? = null,
     val isLoading: Boolean = false
 ) {
     val isValid: Boolean

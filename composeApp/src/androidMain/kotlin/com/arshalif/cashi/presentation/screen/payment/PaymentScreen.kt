@@ -136,8 +136,8 @@ private fun PaymentForm(
                 modifier = Modifier.fillMaxWidth(),
                 isError = !formState.isEmailValid && formState.recipientEmail.isNotBlank(),
                 supportingText = {
-                    if (!formState.isEmailValid && formState.recipientEmail.isNotBlank()) {
-                        Text("Please enter a valid email address")
+                    formState.emailErrorMessage?.let { message ->
+                        Text(message)
                     }
                 }
             )
@@ -146,13 +146,24 @@ private fun PaymentForm(
             OutlinedTextField(
                 value = formState.amount,
                 onValueChange = onAmountChange,
-                label = { Text("Amount") },
+                label = { Text("Amount (${formState.selectedCurrency.symbol})") },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 isError = !formState.isAmountValid && formState.amount.isNotBlank(),
                 supportingText = {
-                    if (!formState.isAmountValid && formState.amount.isNotBlank()) {
-                        Text("Please enter a valid amount")
+                    formState.amountErrorMessage?.let { message ->
+                        Text(message)
+                    } ?: run {
+                        if (formState.amount.isBlank()) {
+                            val limits = when (formState.selectedCurrency) {
+                                Currency.USD -> "${formState.selectedCurrency.symbol}0.01 - ${formState.selectedCurrency.symbol}10,000"
+                                Currency.EUR -> "${formState.selectedCurrency.symbol}0.01 - ${formState.selectedCurrency.symbol}8,500"
+                                Currency.GBP -> "${formState.selectedCurrency.symbol}0.01 - ${formState.selectedCurrency.symbol}8,000"
+                            }
+                            Text("Range: $limits", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        } else {
+                            null
+                        }
                     }
                 }
             )

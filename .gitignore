@@ -18,3 +18,4 @@ captures
 **/xcshareddata/WorkspaceSettings.xcsettings
 jmeter.log
 performance-tests/results/
+/server/keys/serviceAccount.json

@@ -2,6 +2,7 @@ package com.arshalif.cashi.presentation.screen.payment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arshalif.cashi.core.network.NetworkResult
 import com.arshalif.cashi.features.payment.domain.model.Currency
 import com.arshalif.cashi.features.payment.domain.model.Payment
 import com.arshalif.cashi.features.payment.domain.usecase.SendPaymentUseCase
@@ -135,13 +136,13 @@ class PaymentViewModel(
                 
                 val result = sendPaymentUseCase(payment)
                 when (result) {
-                    is com.arshalif.cashi.core.network.NetworkResult.Success -> {
+                    is NetworkResult.Success -> {
                         _uiState.value = PaymentUiState.Success(result.data)
                     }
-                    is com.arshalif.cashi.core.network.NetworkResult.Error -> {
+                    is NetworkResult.Error -> {
                         _uiState.value = PaymentUiState.Error(result.message ?: "Payment failed")
                     }
-                    is com.arshalif.cashi.core.network.NetworkResult.Loading -> {
+                    is NetworkResult.Loading -> {
                         _uiState.value = PaymentUiState.Loading
                     }
                 }

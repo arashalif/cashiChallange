@@ -52,13 +52,15 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
-            
-            // BDD Testing
+        }
+        
+        jvmTest.dependencies {
+            // BDD Testing (JVM only)
             implementation(libs.cucumber.java)
             implementation(libs.cucumber.junit)
             implementation(libs.cucumber.picocontainer)
             
-            // Advanced Testing
+            // Advanced Testing (JVM only)
             implementation(libs.kotest.runner)
             implementation(libs.kotest.assertions)
             implementation(libs.kotest.property)

@@ -30,7 +30,8 @@ dependencies {
     implementation(libs.ktor.clientCore)
     implementation(libs.ktor.clientCio)
     implementation(libs.ktor.clientContentNegotiation)
-    
+    implementation(libs.ktor.serialization.kotlinx.json)
+
     // Kotlinx
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.datetime)

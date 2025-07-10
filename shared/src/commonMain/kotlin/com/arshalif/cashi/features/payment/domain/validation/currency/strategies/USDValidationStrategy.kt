@@ -7,6 +7,7 @@ import com.arshalif.cashi.features.payment.domain.validation.currency.CurrencyVa
 class USDValidationStrategy : CurrencyValidationStrategy {
     override fun validateAmount(amount: Double): ValidationResult {
         return when {
+            amount <= 0.0 -> ValidationResult.Invalid("Amount must be greater than 0")
             amount < 0.01 -> ValidationResult.Invalid("Amount must be at least $0.01")
             amount > 10000.0 -> ValidationResult.Invalid("Amount exceeds maximum allowed of $10,000")
             else -> ValidationResult.Valid

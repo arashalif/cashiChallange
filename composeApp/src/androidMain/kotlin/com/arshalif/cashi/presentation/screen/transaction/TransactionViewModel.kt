@@ -2,6 +2,7 @@ package com.arshalif.cashi.presentation.screen.transaction
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arshalif.cashi.core.network.NetworkResult
 import com.arshalif.cashi.features.transaction.domain.usecase.GetTransactionsUseCase
 import com.arshalif.cashi.features.transaction.presentation.event.TransactionEvent
 import com.arshalif.cashi.features.transaction.presentation.state.TransactionUiState
@@ -42,13 +43,13 @@ class TransactionViewModel(
             try {
                 val result = getTransactionsUseCase()
                 when (result) {
-                    is com.arshalif.cashi.core.network.NetworkResult.Success -> {
+                    is NetworkResult.Success -> {
                         _uiState.value = TransactionUiState.Success(result.data)
                     }
-                    is com.arshalif.cashi.core.network.NetworkResult.Error -> {
+                    is NetworkResult.Error -> {
                         _uiState.value = TransactionUiState.Error(result.message ?: "Failed to load transactions")
                     }
-                    is com.arshalif.cashi.core.network.NetworkResult.Loading -> {
+                    is NetworkResult.Loading -> {
                         _uiState.value = TransactionUiState.Loading
                     }
                 }

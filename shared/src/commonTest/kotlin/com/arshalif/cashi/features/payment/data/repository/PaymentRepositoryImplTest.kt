@@ -1,7 +1,7 @@
 package com.arshalif.cashi.features.payment.data.repository
 
 import com.arshalif.cashi.core.network.NetworkResult
-import com.arshalif.cashi.features.payment.data.remote.MockPaymentApiService
+import com.arshalif.cashi.features.payment.data.remote.MockApiService
 import com.arshalif.cashi.features.payment.domain.model.Currency
 import com.arshalif.cashi.features.payment.domain.model.Payment
 import kotlinx.coroutines.test.runTest
@@ -14,7 +14,7 @@ class PaymentRepositoryImplTest {
     @Test
     fun `sendPayment returns success with valid payment`() = runTest {
         // Given
-        val apiService = MockPaymentApiService()
+        val apiService = MockApiService()
         val repository = PaymentRepositoryImpl(apiService)
         val payment = Payment(
             recipientEmail = "test@example.com",
@@ -37,7 +37,7 @@ class PaymentRepositoryImplTest {
     @Test
     fun `sendPayment handles different currencies`() = runTest {
         // Given
-        val apiService = MockPaymentApiService()
+        val apiService = MockApiService()
         val repository = PaymentRepositoryImpl(apiService)
         val payment = Payment(
             recipientEmail = "test@example.com",

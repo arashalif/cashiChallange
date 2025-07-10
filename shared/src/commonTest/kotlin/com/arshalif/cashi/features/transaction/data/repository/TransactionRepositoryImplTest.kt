@@ -1,7 +1,7 @@
 package com.arshalif.cashi.features.transaction.data.repository
 
 import com.arshalif.cashi.core.network.NetworkResult
-import com.arshalif.cashi.features.payment.data.remote.MockPaymentApiService
+import com.arshalif.cashi.features.payment.data.remote.MockApiService
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -11,7 +11,7 @@ class TransactionRepositoryImplTest {
     @Test
     fun `getTransactions returns list of transactions`() = runTest {
         // Given
-        val apiService = MockPaymentApiService()
+        val apiService = MockApiService()
         val repository = TransactionRepositoryImpl(apiService)
         
         // When
@@ -33,7 +33,7 @@ class TransactionRepositoryImplTest {
     @Test
     fun `getTransactions handles different currencies`() = runTest {
         // Given
-        val apiService = MockPaymentApiService()
+        val apiService = MockApiService()
         val repository = TransactionRepositoryImpl(apiService)
         
         // When

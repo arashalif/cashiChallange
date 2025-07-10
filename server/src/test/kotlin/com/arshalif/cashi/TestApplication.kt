@@ -1,14 +1,17 @@
 package com.arshalif.cashi
 
-import com.arshalif.cashi.application.service.PaymentApplicationService
-import com.arshalif.cashi.application.service.TransactionApplicationService
+import com.arshalif.cashi.service.PaymentApplicationService
+import com.arshalif.cashi.service.TransactionApplicationService
 import com.arshalif.cashi.config.di.testAppModules
 import com.arshalif.cashi.features.payment.domain.validation.PaymentValidator
-import com.arshalif.cashi.presentation.routes.healthRoutes
-import com.arshalif.cashi.presentation.routes.paymentRoutes
-import com.arshalif.cashi.presentation.routes.transactionRoutes
+import com.arshalif.cashi.routes.healthRoutes
+import com.arshalif.cashi.routes.paymentRoutes
+import com.arshalif.cashi.routes.transactionRoutes
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
+import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.routing.*
+import kotlinx.serialization.json.Json
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -20,6 +23,14 @@ fun Application.testModule() {
         stopKoin()
     }
     
+    // Configure JSON content negotiation
+    install(ContentNegotiation) {
+        json(Json {
+            ignoreUnknownKeys = true
+            coerceInputValues = true
+        })
+    }
+    
     // Initialize Koin with TEST modules (uses mocks)
     startKoin {
         modules(testAppModules)
@@ -28,14 +39,12 @@ fun Application.testModule() {
     // Inject dependencies
     val paymentApplicationService by inject<PaymentApplicationService>()
     val transactionApplicationService by inject<TransactionApplicationService>()
-    val paymentValidator by inject<PaymentValidator>()
     
     // Configure routing
     routing {
         // Payment routes
         paymentRoutes(
-            paymentService = paymentApplicationService,
-            paymentValidator = paymentValidator
+            paymentService = paymentApplicationService
         )
         
         // Transaction routes

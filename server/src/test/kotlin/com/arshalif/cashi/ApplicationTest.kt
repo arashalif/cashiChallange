@@ -74,7 +74,7 @@ class ApplicationTest {
             setBody(paymentRequest)
         }.apply {
             assertEquals(HttpStatusCode.BadRequest, status)
-            assertTrue(bodyAsText().contains("Payment validation failed"))
+            assertTrue(bodyAsText().contains("Payment processing failed"))
         }
     }
     
@@ -97,7 +97,7 @@ class ApplicationTest {
             setBody(paymentRequest)
         }.apply {
             assertEquals(HttpStatusCode.BadRequest, status)
-            assertTrue(bodyAsText().contains("Payment validation failed"))
+            assertTrue(bodyAsText().contains("Payment processing failed"))
         }
     }
     
